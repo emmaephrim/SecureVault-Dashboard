@@ -1,9 +1,9 @@
-import './App.css'
+import { DashboardLayout } from "./components/layout/dashboard-layout"
 
 function App() {
   return (
     <>
-      <h1 className='text-brand-on-surface'>Hello</h1>
+      <DashboardLayout />
     </>
   )
 }
