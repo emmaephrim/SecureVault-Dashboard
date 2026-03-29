@@ -19,11 +19,26 @@
                 "name": "Discovery_Phase",
                 "type": "folder",
                 "children": [
-                  { "id": "email_1", "name": "Email_Thread_Jan2024.pdf", "type": "file", "size": "4.2MB" },
-                  { "id": "email_2", "name": "Leak_Evidence.png", "type": "file", "size": "8.1MB" }
+                  {
+                    "id": "email_1",
+                    "name": "Email_Thread_Jan2024.pdf",
+                    "type": "file",
+                    "size": "4.2MB"
+                  },
+                  {
+                    "id": "email_2",
+                    "name": "Leak_Evidence.png",
+                    "type": "file",
+                    "size": "8.1MB"
+                  }
                 ]
               },
-              { "id": "file_summ", "name": "Case_Summary_Draft_v3.docx", "type": "file", "size": "45KB" }
+              {
+                "id": "file_summ",
+                "name": "Case_Summary_Draft_v3.docx",
+                "type": "file",
+                "size": "45KB"
+              }
             ]
           },
           {
@@ -31,7 +46,12 @@
             "name": "Smith_Estate_Dispute",
             "type": "folder",
             "children": [
-              { "id": "will_1", "name": "Last_Will_Testament.pdf", "type": "file", "size": "890KB" }
+              {
+                "id": "will_1",
+                "name": "Last_Will_Testament.pdf",
+                "type": "file",
+                "size": "890KB"
+              }
             ]
           }
         ]
@@ -40,7 +60,7 @@
         "id": "leg_2",
         "name": "Archived_2020",
         "type": "folder",
-        "children": [] 
+        "children": []
       }
     ]
   },
@@ -54,11 +74,26 @@
         "name": "Payroll",
         "type": "folder",
         "children": [
-          { "id": "pay_feb", "name": "February_2025.xlsx", "type": "file", "size": "2.1MB" },
-          { "id": "pay_mar", "name": "March_2025_Projection.xlsx", "type": "file", "size": "1.8MB" }
+          {
+            "id": "pay_feb",
+            "name": "February_2025.xlsx",
+            "type": "file",
+            "size": "2.1MB"
+          },
+          {
+            "id": "pay_mar",
+            "name": "March_2025_Projection.xlsx",
+            "type": "file",
+            "size": "1.8MB"
+          }
         ]
       },
-      { "id": "tax_doc", "name": "Tax_Compliance_Checklist.pdf", "type": "file", "size": "340KB" }
+      {
+        "id": "tax_doc",
+        "name": "Tax_Compliance_Checklist.pdf",
+        "type": "file",
+        "size": "340KB"
+      }
     ]
   },
   {
@@ -71,11 +106,26 @@
         "name": "Server_Logs",
         "type": "folder",
         "children": [
-          { "id": "log_err", "name": "error_log_x86.txt", "type": "file", "size": "12MB" },
-          { "id": "log_acc", "name": "access_log_main.txt", "type": "file", "size": "45MB" }
+          {
+            "id": "log_err",
+            "name": "error_log_x86.txt",
+            "type": "file",
+            "size": "12MB"
+          },
+          {
+            "id": "log_acc",
+            "name": "access_log_main.txt",
+            "type": "file",
+            "size": "45MB"
+          }
         ]
       },
-      { "id": "config_yaml", "name": "docker-compose.yaml", "type": "file", "size": "4KB" }
+      {
+        "id": "config_yaml",
+        "name": "docker-compose.yaml",
+        "type": "file",
+        "size": "4KB"
+      }
     ]
   },
   {
@@ -88,12 +138,32 @@
         "name": "Brand_Assets",
         "type": "folder",
         "children": [
-          { "id": "logo_svg", "name": "SecureVault_Logo.svg", "type": "file", "size": "15KB" },
-          { "id": "font_main", "name": "Roboto-Bold.ttf", "type": "file", "size": "1.2MB" }
+          {
+            "id": "logo_svg",
+            "name": "SecureVault_Logo.svg",
+            "type": "file",
+            "size": "15KB"
+          },
+          {
+            "id": "font_main",
+            "name": "Roboto-Bold.ttf",
+            "type": "file",
+            "size": "1.2MB"
+          }
         ]
       }
     ]
   },
-  { "id": "root_file_1", "name": "README_First.txt", "type": "file", "size": "1KB" },
-  { "id": "root_file_2", "name": ".gitignore", "type": "file", "size": "1KB" }
+  {
+    "id": "root_file_1",
+    "name": "README_First.txt",
+    "type": "file",
+    "size": "1KB"
+  },
+  {
+    "id": "root_file_2",
+    "name": ".gitignore",
+    "type": "file",
+    "size": "1KB"
+  }
 ]
