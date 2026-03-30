@@ -19,10 +19,6 @@ export default function PropertiesPanelHeader({ name, type }: { name: string; ty
       </div>
 
       <hr className="border-1 border-brand-primary pb-5" />
-
-      <div className="px-5 ">
-        <p className="text-brand-on-surface-variant text-label-md-emph uppercase">Properties</p>
-      </div>
     </>
   );
 }
