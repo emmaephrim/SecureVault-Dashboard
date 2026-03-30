@@ -1,0 +1,31 @@
+// const Item: React.FC<{ name: string | number; value: string | number }> = ({ name, value }) => {
+//   return (
+//     <div className="mb-2 px-2 flex items-center justify-between bg-brand-on-secondary p-1 text-brand-secondary text-body-md text-wrap">
+//       <span>{name}</span>
+//       <span>{value}</span>
+//     </div>
+//   );
+// };
+
+const Item: React.FC<{ name: string | number; value: string | number }> = ({ name, value }) => {
+  return (
+    <div className="mb-2 px-2 grid grid-cols-[1fr_2fr] gap-4 bg-brand-on-secondary p-2 text-brand-secondary text-body-md rounded-md">
+      <span className="font-medium opacity-80">{name}</span>
+      <span className="text-right break-words overflow-hidden">{value}</span>
+    </div>
+  );
+};
+
+export default function PropertiesMetadata({ name, type, id, size, items }: { name: string; type: string; id: string; size?: number | string; items?: number }) {
+  return (
+    <div className="px-5">
+      <p className="text-brand-on-surface-variant text-label-md-emph uppercase mb-4">Metadata</p>
+
+      <Item name={"Name"} value={name} />
+      <Item name={"Type"} value={type} />
+      <Item name={"ID"} value={id} />
+      {size && <Item name={"Size"} value={size} />}
+      {items && <Item name={"Items"} value={items as number} />}
+    </div>
+  );
+}
