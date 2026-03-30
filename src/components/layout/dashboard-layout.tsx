@@ -1,34 +1,37 @@
-import Breadcrumb from "../ui/breadcrumb"
-import Footer from "../ui/footer"
+import FileExplorerPanel from "../file-explorer-panel"
+import Footer from "../footer"
+import PropertiesPanel from "../properties-panel"
+import Breadcrumb from "../breadcrumb"
 import MainHeader from "../ui/main-header"
-import Searchbar from "../ui/search-bar"
+import Searchbar from "../search-bar"
 
 export const DashboardLayout: React.FC = () => {
     return (
         <>
-            <div className="px-2 md:px-6 py-3">
-                {/* Header with logo */}
-                <MainHeader />
-                {/* Search Bar */}
-                <Searchbar />
-                {/* Breadcrumb for directory navigation */}
-                <Breadcrumb />
-            </div>
+            <section className="fixed w-full top-0 bg-brand-surface">
+                <div className="px-2 md:px-6 py-3">
+                    {/* Header with logo */}
+                    <MainHeader />
+                    {/* Search Bar */}
+                    <Searchbar />
+                    {/* Breadcrumb for directory navigation */}
+                    <Breadcrumb />
+                </div>
 
-            <div>
-                <hr className="border-t-1 border-brand-primary" />
-            </div>
-
-            <div className="flex flex-row justify-end">
-                <section className="p-2 w-full overflow-scroll">
+                <div>
+                    <hr className="border-t-1 border-brand-primary" />
+                </div>
+            </section>
 
 
-                </section>
 
-                <section className="p-2 min-w-[40rem] border-brand-primary border-l-[1px] min-h-[calc(100vh-233px)]">
+            <section className="mt-[189px]">
+                <div className="flex flex-row justify-end">
+                    <FileExplorerPanel />
 
-                </section>
-            </div>
+                    <PropertiesPanel />
+                </div>
+            </section>
 
             {/* footer */}
             <Footer length={8} fileName="Partner_Contact_Database.xlsx" />
