@@ -1,13 +1,20 @@
 import { LuArrowUpDown } from "react-icons/lu";
 import { NavigationSign } from "./navigation-sign";
 import { FaArrowsLeftRight } from "react-icons/fa6";
+import { GoDotFill } from "react-icons/go";
 
-export default function Footer({ length }: { length: number }): React.ReactElement {
+export default function Footer({ length, fileName }: { length: number, fileName?: string }): React.ReactElement {
     return (
         <>
             <div className="px-6 py-2 flex flex-row justify-between items-center border-2 border-t-brand-primary border-b-0 border-x-0">
-                <div className="text-brand-on-surface text-body-md">
-                    {length} items
+                <div className="text-brand-on-surface text-body-md flex flex-row items-center shrink-0 gap-2">
+                    <span>{length} items</span>
+                    {fileName && (
+                        <span className="text-brand-primary flex flex-row items-center gap-1 shrink-0">
+                            <GoDotFill className="text-brand-primary" />
+                            {fileName}
+                        </span>
+                    )}
                 </div>
 
                 <div className="flex flex-row items-center">
