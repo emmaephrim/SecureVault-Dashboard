@@ -49,7 +49,10 @@ export function TreeNode({ node, depth }: { node: Node; depth: number }) {
         </div>
 
         {/* Name */}
-        <span className="truncate text-brand-on-surface text-body-md">{node.name}</span>
+        <div className="flex items-center justify-between w-full">
+          <span className="truncate text-brand-on-surface text-body-md">{node.name}</span>
+          <span className="text-brand-outline text-body-sm">{node.size}</span>
+        </div>
       </button>
 
       {isFolder && isExpanded && node.children && <FileTree data={node.children} depth={depth + 1} />}
