@@ -1,6 +1,6 @@
 import { MdOutlineHome } from "react-icons/md";
-import { FaChevronRight } from "react-icons/fa";
 import BreadcrumbItem from "./breadcrumb-item";
+import RightChevron from "./right-chevron";
 
 export default function Breadcrumb(): React.ReactElement {
     return (
@@ -11,15 +11,15 @@ export default function Breadcrumb(): React.ReactElement {
                     Root
                 </button>
 
-                <FaChevronRight className="shrink-0 text-title-sm text-brand-outline" />
+                <RightChevron />
 
                 <BreadcrumbItem item=" Community Affairs" />
 
-                <FaChevronRight className="shrink-0 text-title-sm text-brand-outline" />
+                <RightChevron />
 
                 <BreadcrumbItem item=" Partnership & Outreach" />
 
-                <FaChevronRight className="shrink-0 text-title-sm text-brand-outline" />
+                <RightChevron />
 
                 <span className="shrink-0 text-brand-primary text-title-md px-2">
                     Partner_Contact_Database.xlsx
