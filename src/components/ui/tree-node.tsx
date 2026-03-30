@@ -24,40 +24,35 @@ export function TreeNode({ node, depth }: { node: Node; depth: number }) {
 
   return (
     <li>
-      <div
-        tabIndex={parseInt(node.id, 10)}
+      <button
+        type="button"
         onClick={() => {
           if (isFolder) toggle();
           setSelected(node.id);
         }}
         className={`
-          flex items-center gap-2 px-2 py-1 cursor-pointer
-          ${isSelected ? "bg-brand-primary-container text-brand-on-primary-container border-2 border-brand-primary rounded-md" : ""}
-        `}
+        flex items-center gap-2 px-2 py-1 w-full cursor-pointer rounded-md border-2 border-transparent
+        transition-all outline-none text-left
+       focus:bg-brand-primary-container
+        focus:text-brand-on-primary-container
+        focus:border-brand-primary
+        hover:bg-brand-primary-container
+        ${isSelected ? "bg-brand-primary-container font-semibold" : ""}
+      `}
         style={{ paddingLeft: `${depth * 16}px` }}
+        onBlur={() => setSelected(null)}
       >
-        {isFolder ? isExpanded ? <DownChevron /> : <RightChevron /> : <FileIcon />}
+        {/* Icons */}
+        <div className="flex-shrink-0 flex items-center">
+          {isFolder ? isExpanded ? <DownChevron /> : <RightChevron /> : <FileIcon />}
+          {isFolder && <FolderIcon />}
+        </div>
 
-        {isFolder ? <FolderIcon /> : null}
-
+        {/* Name */}
         <span className="truncate text-brand-on-surface text-body-md">{node.name}</span>
-      </div>
+      </button>
 
       {isFolder && isExpanded && node.children && <FileTree data={node.children} depth={depth + 1} />}
     </li>
   );
-}
-
-{
-  /* <div
-        onClick={() => {
-          if (isFolder) toggle();
-          setSelected(node.id);
-        }}
-        className={`
-          flex items-center gap-2 px-2 py-1 cursor-pointer
-          ${isSelected ? "bg-brand-primary-container text-brand-on-primary-container border-2 border-brand-primary rounded-md" : ""}
-        `}
-        style={{ paddingLeft: `${depth * 16}px` }}
-      ></div> */
 }
