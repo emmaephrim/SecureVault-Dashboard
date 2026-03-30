@@ -1,12 +1,12 @@
-import type { Props } from "../../types"
-import { TreeNode } from "./tree-node"
+import type { FileTreeProps } from "../../types";
+import { TreeNode } from "./tree-node";
 
-export default function FileTree({ data, depth = 0 }: Props) {
-    return (
-        <ul>
-            {data.map(node => (
-                <TreeNode key={node.id} node={node} depth={depth} />
-            ))}
-        </ul>
-    )
+export default function FileTree({ data, depth = 0, expanded, setExpanded, selectedId, setSelectedId }: FileTreeProps) {
+  return (
+    <ul>
+      {data.map((node) => (
+        <TreeNode key={node.id} node={node} depth={depth} expanded={expanded} setExpanded={setExpanded} selectedId={selectedId} setSelectedId={setSelectedId} />
+      ))}
+    </ul>
+  );
 }

@@ -1,18 +1,17 @@
-import { useState } from "react";
-import type { Node } from "../../types";
+import type { TreeNodeProps } from "../../types";
 import DownChevron from "./down-chevron";
 import RightChevron from "./right-chevron";
 import FileIcon from "./file-icon";
 import FolderIcon from "./folder-icon";
 import FileTree from "./file-tree";
 
-export function TreeNode({ node, depth }: { node: Node; depth: number }) {
-  const [expanded, setExpanded] = useState<Set<string>>(new Set());
-  const [selected, setSelected] = useState<string | null>(null);
+export function TreeNode({ node, depth, expanded, setExpanded, selectedId, setSelectedId }: TreeNodeProps) {
+  //   const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  //   const [selected, setSelected] = useState<string | null>(null);
 
   const isFolder = node.type === "folder";
   const isExpanded = expanded.has(node.id);
-  const isSelected = selected === node.id;
+  const isSelected = selectedId === node.id;
 
   const toggle = () => {
     if (!isFolder) return;
@@ -28,7 +27,7 @@ export function TreeNode({ node, depth }: { node: Node; depth: number }) {
         type="button"
         onClick={() => {
           if (isFolder) toggle();
-          setSelected(node.id);
+          setSelectedId(node.id);
         }}
         className={`
         flex items-center gap-2 px-2 py-1 w-full cursor-pointer rounded-md border-2 border-transparent
@@ -40,7 +39,7 @@ export function TreeNode({ node, depth }: { node: Node; depth: number }) {
         ${isSelected ? "bg-brand-primary-container font-semibold" : ""}
       `}
         style={{ paddingLeft: `${depth * 16}px` }}
-        onBlur={() => setSelected(null)}
+        onBlur={() => setSelectedId(null)}
       >
         {/* Icons */}
         <div className="flex-shrink-0 flex items-center">
@@ -55,7 +54,7 @@ export function TreeNode({ node, depth }: { node: Node; depth: number }) {
         </div>
       </button>
 
-      {isFolder && isExpanded && node.children && <FileTree data={node.children} depth={depth + 1} />}
+      {isFolder && isExpanded && node.children && <FileTree data={node.children} depth={depth + 1} expanded={expanded} setExpanded={setExpanded} selectedId={selectedId} setSelectedId={setSelectedId} />}
     </li>
   );
 }
