@@ -1,0 +1,63 @@
+import { useState } from "react";
+import type { Node } from "../../types";
+import DownChevron from "./down-chevron";
+import RightChevron from "./right-chevron";
+import FileIcon from "./file-icon";
+import FolderIcon from "./folder-icon";
+import FileTree from "./file-tree";
+
+export function TreeNode({ node, depth }: { node: Node; depth: number }) {
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  const [selected, setSelected] = useState<string | null>(null);
+
+  const isFolder = node.type === "folder";
+  const isExpanded = expanded.has(node.id);
+  const isSelected = selected === node.id;
+
+  const toggle = () => {
+    if (!isFolder) return;
+    const newSet = new Set(expanded);
+    if (newSet.has(node.id)) newSet.delete(node.id);
+    else newSet.add(node.id);
+    setExpanded(newSet);
+  };
+
+  return (
+    <li>
+      <div
+        tabIndex={parseInt(node.id, 10)}
+        onClick={() => {
+          if (isFolder) toggle();
+          setSelected(node.id);
+        }}
+        className={`
+          flex items-center gap-2 px-2 py-1 cursor-pointer
+          ${isSelected ? "bg-brand-primary-container text-brand-on-primary-container border-2 border-brand-primary rounded-md" : ""}
+        `}
+        style={{ paddingLeft: `${depth * 16}px` }}
+      >
+        {isFolder ? isExpanded ? <DownChevron /> : <RightChevron /> : <FileIcon />}
+
+        {isFolder ? <FolderIcon /> : null}
+
+        <span className="truncate text-brand-on-surface text-body-md">{node.name}</span>
+      </div>
+
+      {isFolder && isExpanded && node.children && <FileTree data={node.children} depth={depth + 1} />}
+    </li>
+  );
+}
+
+{
+  /* <div
+        onClick={() => {
+          if (isFolder) toggle();
+          setSelected(node.id);
+        }}
+        className={`
+          flex items-center gap-2 px-2 py-1 cursor-pointer
+          ${isSelected ? "bg-brand-primary-container text-brand-on-primary-container border-2 border-brand-primary rounded-md" : ""}
+        `}
+        style={{ paddingLeft: `${depth * 16}px` }}
+      ></div> */
+}
