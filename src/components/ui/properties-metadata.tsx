@@ -1,15 +1,6 @@
-// const Item: React.FC<{ name: string | number; value: string | number }> = ({ name, value }) => {
-//   return (
-//     <div className="mb-2 px-2 flex items-center justify-between bg-brand-on-secondary p-1 text-brand-secondary text-body-md text-wrap">
-//       <span>{name}</span>
-//       <span>{value}</span>
-//     </div>
-//   );
-// };
-
 const Item: React.FC<{ name: string | number; value: string | number }> = ({ name, value }) => {
   return (
-    <div className="mb-2 px-2 grid grid-cols-[1fr_2fr] gap-4 bg-brand-on-secondary p-2 text-brand-secondary text-body-md rounded-md">
+    <div className="mb-2 px-2 grid grid-cols-[1fr_2fr] gap-4 bg-brand-on-secondary p-2 text-brand-secondary text-body-md rounded-sm">
       <span className="font-medium opacity-80">{name}</span>
       <span className="text-right break-words overflow-hidden">{value}</span>
     </div>
