@@ -19,42 +19,7 @@ export default function Breadcrumb({ path, onNavigate }): React.ReactElement {
             {node.type == "file" && <span className="shrink-0 text-brand-primary text-title-md px-2">{node.name}</span>}
           </div>
         ))}
-
-        {/* <button className="shrink-0 text-brand-outline text-title-md flex items-center flex-row hover:bg-brand-primary-container hover:text-brand-on-primary-container group py-1 px-2">
-                    <MdOutlineHome className="h-5 w-5 text-title-md text-brand-outline group-hover:text-brand-on-primary-container" />
-                    Root
-                </button>
-
-                <RightChevron />
-
-                <BreadcrumbItem item=" Community Affairs" />
-
-                <RightChevron />
-
-                <BreadcrumbItem item=" Partnership & Outreach" />
-
-                <RightChevron />
-
-                <span className="shrink-0 text-brand-primary text-title-md px-2">
-                    Partner_Contact_Database.xlsx
-                </span> */}
       </div>
     </>
   );
 }
-
-// export default function Breadcrumb({ path, onNavigate }) {
-//   return (
-//     <div className="flex overflow-x-auto mt-4 text-brand-on-surface">
-//       {path.map((node, index) => (
-//         <div key={node.id} className="flex items-center text-brand-on-surface">
-//           <button onClick={() => onNavigate(node.id)} className="text-brand-on-surface">
-//             {node.name}
-//           </button>
-
-//           {index < path.length - 1 && <RightChevron />}
-//         </div>
-//       ))}
-//     </div>
-//   );
-// }

@@ -13,12 +13,23 @@ export function TreeNode({ node, depth, expanded, setExpanded, selectedId, setSe
   const isExpanded = expanded.has(node.id);
   const isSelected = selectedId === node.id;
 
+  // const toggle = () => {
+  //   if (!isFolder) return;
+  //   const newSet = new Set(expanded);
+  //   if (newSet.has(node.id)) newSet.delete(node.id);
+  //   else newSet.add(node.id);
+  //   setExpanded(newSet);
+  // };
+
   const toggle = () => {
     if (!isFolder) return;
-    const newSet = new Set(expanded);
-    if (newSet.has(node.id)) newSet.delete(node.id);
-    else newSet.add(node.id);
-    setExpanded(newSet);
+
+    setExpanded((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(node.id)) newSet.delete(node.id);
+      else newSet.add(node.id);
+      return newSet;
+    });
   };
 
   return (
@@ -29,17 +40,29 @@ export function TreeNode({ node, depth, expanded, setExpanded, selectedId, setSe
           if (isFolder) toggle();
           setSelectedId(node.id);
         }}
+        //   className={`
+        //   flex items-center gap-2 px-2 py-1 w-full cursor-pointer rounded-md
+        //   transition-all outline-none text-left hover:bg-brand-primary-container
+        //   ${isSelected ? "bg-brand-primary-container font-semibold text-brand-on-primary-container border-brand-primary border-2" : ""}
+        // `}
+
+        //         className={`
+        //   flex items-center gap-2 px-2 py-1 w-full cursor-pointer rounded-md border-2
+        //   transition-all outline-none text-left hover:bg-brand-primary-container
+
+        //   /* Conditional Logic */
+        //   ${isSelected ? "bg-brand-primary-container font-semibold text-brand-on-primary-container border-brand-primary" : "border-transparent"}
+        // `}
+
         className={`
-        flex items-center gap-2 px-2 py-1 w-full cursor-pointer rounded-md border-2 border-transparent
-        transition-all outline-none text-left
-       focus:bg-brand-primary-container
-        focus:text-brand-on-primary-container
-        focus:border-brand-primary
-        hover:bg-brand-primary-container
-        ${isSelected ? "bg-brand-primary-container font-semibold" : ""}
-      `}
+  flex items-center gap-2 px-2 py-1 w-full cursor-pointer rounded-md
+  border-2 transition-all duration-200 ease-in-out text-left outline-none
+
+  /* Starting/Idle State */
+  ${isSelected ? "bg-brand-primary-container border-brand-primary text-brand-on-primary-container font-semibold" : "border-transparent bg-transparent hover:bg-brand-primary-container/50"}
+`}
         style={{ paddingLeft: `${depth * 16}px` }}
-        onBlur={() => setSelectedId(null)}
+        // onBlur={() => setSelectedId(null)}
       >
         {/* Icons */}
         <div className="flex-shrink-0 flex items-center">
