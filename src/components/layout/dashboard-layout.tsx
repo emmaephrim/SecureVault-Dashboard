@@ -4,7 +4,7 @@ import PropertiesPanel from "../properties-panel";
 import Breadcrumb from "../breadcrumb";
 import MainHeader from "../ui/main-header";
 import Searchbar from "../search-bar";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import data from "../../../data.json";
 import type { Node } from "../../types";
 
@@ -12,6 +12,7 @@ export const DashboardLayout: React.FC = () => {
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [query, setQuery] = useState("");
+  const [focusedId, setFocusedId] = useState<string | null>(null);
 
   function buildNodeMap(data: Node[]) {
     const map = new Map<string, Node>();
@@ -106,7 +107,7 @@ export const DashboardLayout: React.FC = () => {
       .filter((node): node is Node => node !== null); // proper type guard
   }
 
-  // Compute filtered tree + expanded nodes
+  // Compute filtered tree plus expanded nodes
   const { filteredData, autoExpanded } = useMemo(() => {
     const newExpanded = new Set<string>();
 
@@ -122,6 +123,92 @@ export const DashboardLayout: React.FC = () => {
   const effectiveExpanded = useMemo(() => {
     return new Set([...expanded, ...autoExpanded]);
   }, [expanded, autoExpanded]);
+
+  // Keyboard Shortcuts feature
+  // Flatten visible nodes based on expansion state
+  // NEW state
+  // Flatten visible nodes
+  function flattenVisible(nodes: Node[], expanded: Set<string>): Node[] {
+    const result: Node[] = [];
+
+    function traverse(list: Node[]) {
+      for (const node of list) {
+        result.push(node);
+
+        if (node.type === "folder" && expanded.has(node.id)) {
+          traverse(node.children || []);
+        }
+      }
+    }
+
+    traverse(nodes);
+    return result;
+  }
+
+  const visibleNodes = useMemo(() => {
+    return flattenVisible(filteredData, expanded);
+  }, [filteredData, expanded]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if (!visibleNodes.length) return;
+
+      const currentIndex = visibleNodes.findIndex((n) => n.id === focusedId);
+
+      // ⬇️ Arrow Down → move focus
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+
+        const next = currentIndex === -1 ? visibleNodes[0] : visibleNodes[currentIndex + 1];
+
+        if (next) setFocusedId(next.id);
+      }
+
+      // ⬆️ Arrow Up → move focus
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+
+        const prev = currentIndex === -1 ? visibleNodes[0] : visibleNodes[currentIndex - 1];
+
+        if (prev) setFocusedId(prev.id);
+      }
+
+      // ➡️ Expand
+      if (e.key === "ArrowRight") {
+        const current = visibleNodes[currentIndex];
+        if (current?.type === "folder") {
+          setExpanded((prev) => new Set(prev).add(current.id));
+        }
+      }
+
+      // ⬅️ Collapse
+      if (e.key === "ArrowLeft") {
+        const current = visibleNodes[currentIndex];
+        if (current?.type === "folder") {
+          setExpanded((prev) => {
+            const next = new Set(prev);
+            next.delete(current.id);
+            return next;
+          });
+        }
+      }
+
+      // ✅ Enter → confirm selection
+      if (e.key === "Enter") {
+        e.preventDefault();
+
+        const current = focusedId ? visibleNodes.find((n) => n.id === focusedId) : visibleNodes[0];
+
+        if (current) {
+          setSelectedId(current.id);
+        }
+      }
+    }
+
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [visibleNodes, focusedId]);
 
   return (
     <>
@@ -142,7 +229,7 @@ export const DashboardLayout: React.FC = () => {
 
       <section className="mt-[189px] w-full">
         <div className="flex flex-row justify-end">
-          <FileExplorerPanel data={filteredData} expanded={effectiveExpanded} setExpanded={setExpanded} selectedId={selectedId} setSelectedId={setSelectedId} />
+          <FileExplorerPanel data={filteredData} expanded={effectiveExpanded} setExpanded={setExpanded} selectedId={selectedId} setSelectedId={setSelectedId} focusedId={focusedId} />
 
           <PropertiesPanel node={selectedNode} />
         </div>
