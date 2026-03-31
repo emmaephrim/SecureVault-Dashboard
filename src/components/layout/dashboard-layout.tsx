@@ -126,8 +126,6 @@ export const DashboardLayout: React.FC = () => {
 
   // Keyboard Shortcuts feature
   // Flatten visible nodes based on expansion state
-  // NEW state
-  // Flatten visible nodes
   function flattenVisible(nodes: Node[], expanded: Set<string>): Node[] {
     const result: Node[] = [];
 
@@ -156,7 +154,7 @@ export const DashboardLayout: React.FC = () => {
 
       const currentIndex = visibleNodes.findIndex((n) => n.id === focusedId);
 
-      // ⬇️ Arrow Down → move focus
+      //Arrow Down → move focus
       if (e.key === "ArrowDown") {
         e.preventDefault();
 
@@ -165,7 +163,7 @@ export const DashboardLayout: React.FC = () => {
         if (next) setFocusedId(next.id);
       }
 
-      // ⬆️ Arrow Up → move focus
+      // Arrow Up → move focus
       if (e.key === "ArrowUp") {
         e.preventDefault();
 
@@ -174,7 +172,7 @@ export const DashboardLayout: React.FC = () => {
         if (prev) setFocusedId(prev.id);
       }
 
-      // ➡️ Expand
+      // Expand
       if (e.key === "ArrowRight") {
         const current = visibleNodes[currentIndex];
         if (current?.type === "folder") {
@@ -182,7 +180,7 @@ export const DashboardLayout: React.FC = () => {
         }
       }
 
-      // ⬅️ Collapse
+      // Collapse
       if (e.key === "ArrowLeft") {
         const current = visibleNodes[currentIndex];
         if (current?.type === "folder") {
@@ -194,7 +192,7 @@ export const DashboardLayout: React.FC = () => {
         }
       }
 
-      // ✅ Enter → confirm selection
+      // Enter → confirm selection
       if (e.key === "Enter") {
         e.preventDefault();
 
