@@ -16,7 +16,7 @@ export default function PropertiesMetadata({ name, type, id, size, items }: { na
       <Item name={"Type"} value={type} />
       <Item name={"ID"} value={id} />
       {size && <Item name={"Size"} value={size} />}
-      {items && <Item name={"Items"} value={items as number} />}
+      {items && <Item name={items > 1 ? "Items" : "Item"} value={items as number} />}
     </div>
   );
 }

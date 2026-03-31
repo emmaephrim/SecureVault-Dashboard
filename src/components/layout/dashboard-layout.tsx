@@ -63,6 +63,22 @@ export const DashboardLayout: React.FC = () => {
   const parentMap = useMemo(() => buildParentMap(data), []);
   const breadcrumbPath = getPath(selectedId, parentMap, nodeMap);
 
+  function getItemCount() {
+    if (!selectedNode) return data.length;
+
+    // If folder → count its children
+    if (selectedNode.type === "folder") {
+      return selectedNode.children?.length || 0;
+    }
+
+    // If file → count siblings (parent folder)
+    const parentId = parentMap.get(selectedNode.id);
+    if (!parentId) return data.length;
+
+    const parent = nodeMap.get(parentId);
+    return parent?.children?.length || 0;
+  }
+
   return (
     <>
       <section className="fixed w-full top-0 bg-brand-surface">
@@ -89,7 +105,7 @@ export const DashboardLayout: React.FC = () => {
       </section>
 
       {/* footer */}
-      <Footer length={data.length} fileName={selectedNode?.type === "file" ? selectedNode.name : undefined} />
+      <Footer length={getItemCount()} fileName={selectedNode?.type === "file" ? selectedNode.name : undefined} />
     </>
   );
 };
