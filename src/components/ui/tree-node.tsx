@@ -30,16 +30,17 @@ export function TreeNode({ node, depth, expanded, setExpanded, selectedId, setSe
           setSelectedId(node.id);
         }}
         className={`
-          flex items-center gap-2 px-2 py-1 w-full cursor-pointer rounded-md
+          flex items-center gap-2  px-2 py-1 w-full cursor-pointer rounded-md
           border-2 transition-all duration-200 ease-in-out text-left outline-none
-          ${isSelected ? "bg-brand-primary-container border-brand-primary text-brand-on-primary-container font-semibold" : "border-transparent bg-transparent hover:bg-brand-primary-container/50"}
+          ${isSelected ? "bg-brand-primary-container border-brand-primary text-brand-on-primary-container font-semibold" : "border-transparent bg-transparent hover:bg-brand-on-secondary hover:text-brand-secondary group"}
         `}
         style={{ paddingLeft: `${depth * 16}px` }}
       >
         {/* Icons */}
-        <div className=" flex items-center">
-          {isFolder ? isExpanded ? <DownChevron /> : <RightChevron /> : <FileIcon />}
-          {isFolder && <FolderIcon />}
+        <div className="flex items-center">
+          <div className="w-5 flex-shrink-0 flex items-center justify-center">{isFolder ? isExpanded ? <DownChevron /> : <RightChevron /> : <div className="w-5" />}</div>
+
+          <div className="flex-shrink-0 flex items-center">{isFolder ? <FolderIcon /> : <FileIcon color="text-brand-outline" />}</div>
         </div>
 
         {/* Name */}
