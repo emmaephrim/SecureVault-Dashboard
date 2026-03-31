@@ -28,7 +28,7 @@
         font-family: 'Roboto';
         font-style: normal;
         font-weight: 700;
-        src: url('./assets/fonts/roboto-v51-latin-700.woff2') format('woff2');
+        src: url('./assets/fonts/roboto/roboto-v51-latin-700.woff2') format('woff2');
     }
 
     /* roboto-800 - latin */
@@ -37,7 +37,7 @@
         font-family: 'Roboto';
         font-style: normal;
         font-weight: 800;
-        src: url('./assets/fonts/roboto-v51-latin-800.woff2') format('woff2');
+        src: url('./assets/fonts/roboto/roboto-v51-latin-800.woff2') format('woff2');
     }
 
     /* roboto-900 - latin */
@@ -46,7 +46,7 @@
         font-family: 'Roboto';
         font-style: normal;
         font-weight: 900;
-        src: url('./assets/fonts/roboto-v51-latin-900.woff2') format('woff2');
+        src: url('./assets/fonts/roboto/roboto-v51-latin-900.woff2') format('woff2');
     }
 }
 
