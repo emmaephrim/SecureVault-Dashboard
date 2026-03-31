@@ -10,7 +10,7 @@ export default function Breadcrumb({ path, onNavigate }): React.ReactElement {
           onClick={() => {
             onNavigate(null);
           }}
-          className="shrink-0 text-brand-outline text-title-md flex items-center flex-row hover:bg-brand-primary-container hover:text-brand-on-primary-container group py-1 px-2"
+          className="shrink-0 text-brand-outline text-title-md flex items-center flex-row hover:bg-brand-primary-container hover:text-brand-on-primary-container group py-1 px-2 border-brand-inverse-on-surface border-l-2"
         >
           <MdOutlineHome className="h-5 w-5 text-title-md text-brand-outline group-hover:text-brand-on-primary-container" />
           Root

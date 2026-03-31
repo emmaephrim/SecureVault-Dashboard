@@ -5,7 +5,7 @@ import type { Node } from "../types";
 
 export default function FileExplorerPanel({ data, expanded, setExpanded, selectedId, setSelectedId }): React.ReactElement {
   return (
-    <section className="p-2 md:pl-6 pt-3 w-full overflow-x-auto">
+    <section className="p-2 py-4 md:pl-6 pt-3 w-full overflow-x-auto">
       <SectionTitle>FILE EXPLORER</SectionTitle>
       {/* Section for recursive tree */}
 
