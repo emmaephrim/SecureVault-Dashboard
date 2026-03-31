@@ -1,5 +1,5 @@
 import { FaRegFile } from "react-icons/fa";
-import { FaRegFolder } from "react-icons/fa";
+import { FaRegFolder } from "react-icons/fa6";
 
 const layout: Record<string, string> = {
   iconContainer: "shrink-0 text-title-md text-brand-primary bg-brand-on-primary w-16 rounded-md h-16 p-2 border-2 border-brand-inverse-primary mr-3",
