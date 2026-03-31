@@ -1,15 +1,15 @@
 import { SectionTitle } from "./ui/section-title";
 // import data from "../../data.json";
 import FileTree from "./ui/file-tree";
-import type { Node } from "../types";
+import type { FileExplorerPanelProps, Node } from "../types";
 
-export default function FileExplorerPanel({ data, expanded, setExpanded, selectedId, setSelectedId }): React.ReactElement {
+export default function FileExplorerPanel({ data, expanded, setExpanded, selectedId, setSelectedId, focusedId }: FileExplorerPanelProps): React.ReactElement {
   return (
     <section className="p-2 py-4 md:pl-6 pt-3 w-full overflow-x-auto">
       <SectionTitle>FILE EXPLORER</SectionTitle>
       {/* Section for recursive tree */}
 
-      <FileTree data={data as Node[]} expanded={expanded} setExpanded={setExpanded} selectedId={selectedId} setSelectedId={setSelectedId} />
+      <FileTree data={data as Node[]} expanded={expanded} setExpanded={setExpanded} selectedId={selectedId} setSelectedId={setSelectedId} focusedId={focusedId} />
     </section>
   );
 }
