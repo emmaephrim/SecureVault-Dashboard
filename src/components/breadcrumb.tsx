@@ -1,8 +1,9 @@
 import { MdOutlineHome } from "react-icons/md";
 import BreadcrumbItem from "./ui/breadcrumb-item";
 import RightChevron from "./ui/right-chevron";
+import type { Node, SetSelected } from "../types";
 
-export default function Breadcrumb({ path, onNavigate }): React.ReactElement {
+export default function Breadcrumb({ path, onNavigate }: { path: Node[]; onNavigate: SetSelected }): React.ReactElement {
   return (
     <>
       <div className="overflow-x-auto flex flex-row mt-4 items-center w-full whitespace-nowrap transition-all duration-200">
@@ -15,8 +16,8 @@ export default function Breadcrumb({ path, onNavigate }): React.ReactElement {
           <MdOutlineHome className="h-5 w-5 text-title-md text-brand-outline group-hover:text-brand-on-primary-container" />
           Root
         </button>
-        {path.map((node, index) => (
-          <div key={node.id} className="flex items-center transition-all duration-200">
+        {path.map((node: Node, index: number) => (
+          <div key={index} className="flex items-center transition-all duration-200">
             <RightChevron />
 
             {node.type !== "file" && <BreadcrumbItem node={node} onNavigate={onNavigate} />}

@@ -11,7 +11,7 @@ import type { Node } from "../../types";
 export const DashboardLayout: React.FC = () => {
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [query, setQuery] = useState("");
+  // const [query, setQuery] = useState("");
 
   function buildNodeMap(data: Node[]) {
     const map = new Map<string, Node>();
@@ -27,7 +27,7 @@ export const DashboardLayout: React.FC = () => {
     return map;
   }
 
-  const nodeMap = useMemo(() => buildNodeMap(data), []);
+  const nodeMap = useMemo(() => buildNodeMap(data as Node[]), []);
   const selectedNode = selectedId ? nodeMap.get(selectedId) : null;
 
   function buildParentMap(data: Node[]) {
@@ -44,23 +44,23 @@ export const DashboardLayout: React.FC = () => {
     return parentMap;
   }
 
-  function getPath(selectedId: string | null, parentMap, nodeMap) {
+  function getPath(selectedId: string | null, parentMap: Map<string, string | null>, nodeMap: Map<string, Node>) {
     if (!selectedId) return [];
 
     const path = [];
-    let current = selectedId;
+    let current: string | null = selectedId;
 
     while (current) {
       const node = nodeMap.get(current);
       if (!node) break;
       path.unshift(node);
-      current = parentMap.get(current);
+      current = parentMap.get(current) ?? null;
     }
 
     return path;
   }
 
-  const parentMap = useMemo(() => buildParentMap(data), []);
+  const parentMap = useMemo(() => buildParentMap(data as Node[]), []);
   const breadcrumbPath = getPath(selectedId, parentMap, nodeMap);
 
   function getItemCount() {

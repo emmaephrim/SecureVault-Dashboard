@@ -6,20 +6,23 @@ export type Node = {
   children?: Node[];
 };
 
+export type SetExpanded = (value: Set<string> | ((prev: Set<string>) => Set<string>)) => void;
+export type SetSelected = (value: string | null | ((prev: string | null) => string | null)) => void;
+
 export type FileTreeProps = {
   data: Node[];
   depth?: number;
   expanded: Set<string>;
-  setExpanded: (expanded: Set<string>) => void;
+  setExpanded: SetExpanded;
   selectedId: string | null;
-  setSelectedId: (id: string | null) => void;
+  setSelectedId: SetSelected;
 };
 
 export type TreeNodeProps = {
   node: Node;
   depth: number;
   expanded: Set<string>;
-  setExpanded: (expanded: Set<string>) => void;
+  setExpanded: SetExpanded;
   selectedId: string | null;
-  setSelectedId: (id: string | null) => void;
+  setSelectedId: SetSelected;
 };
