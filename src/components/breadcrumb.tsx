@@ -24,7 +24,7 @@ export default function Breadcrumb({ path, onNavigate, setQuery }: { path: Node[
             {/* Only folders are navigable in breadcrumb */}
             {node.type !== "file" && <BreadcrumbItem node={node} onNavigate={onNavigate} />}
             {/* Files are shown as the final, non-clickable item */}
-            {node.type == "file" && <span className="shrink-0 text-brand-primary text-title-md px-2">{node.name}</span>}
+            {node.type == "file" && <span className="shrink-0 text-brand-primary text-title-md px-2 transition-all duration-200 opacity-100">{node.name}</span>}
           </div>
         ))}
       </div>
