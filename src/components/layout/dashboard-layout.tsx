@@ -7,6 +7,7 @@ import Searchbar from "../search-bar";
 import { useEffect, useMemo, useState } from "react";
 import data from "../../../data.json";
 import type { Node } from "../../types";
+import PropertiesModal from "../ui/properties-modal";
 
 export const DashboardLayout: React.FC = () => {
   // Tracks which folders are open
@@ -14,9 +15,11 @@ export const DashboardLayout: React.FC = () => {
   // Currently selected node (confirmed via click or Enter)
   const [selectedId, setSelectedId] = useState<string | null>(null);
   // Search input
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState<string>("");
   // Keyboard navigation focus (separate from selection)
   const [focusedId, setFocusedId] = useState<string | null>(null);
+  // Trigger modal on mobile
+  const [showProperties, setShowProperties] = useState<boolean>(false);
 
   // Build a quick lookup map (id -> node)
   // Avoids repeatedly traversing the tree when we need a node
@@ -203,6 +206,9 @@ export const DashboardLayout: React.FC = () => {
         const current = focusedId ? visibleNodes.find((n) => n.id === focusedId) : visibleNodes[0];
         if (current) {
           setSelectedId(current.id);
+          if (window.innerWidth < 640) {
+            setShowProperties(true);
+          }
         }
       }
     }
@@ -214,7 +220,7 @@ export const DashboardLayout: React.FC = () => {
   return (
     <>
       <section className="fixed w-full top-0">
-        <div className="px-2 md:px-6 py-3">
+        <div className="px-2 md:px-6 py-3 bg-brand-background">
           <MainHeader />
           {/* Search input */}
           <Searchbar query={query} setQuery={setQuery} />
@@ -228,14 +234,16 @@ export const DashboardLayout: React.FC = () => {
       </section>
 
       <section className="mt-[189px] w-full">
-        <div className="flex flex-row justify-end">
-          <FileExplorerPanel data={filteredData} expanded={effectiveExpanded} setExpanded={setExpanded} selectedId={selectedId} setSelectedId={setSelectedId} focusedId={focusedId} setFocusedId={setFocusedId} />
+        <div className="flex">
+          <FileExplorerPanel data={filteredData} expanded={effectiveExpanded} setExpanded={setExpanded} selectedId={selectedId} setSelectedId={setSelectedId} focusedId={focusedId} setFocusedId={setFocusedId} showProperties={showProperties} setShowProperties={setShowProperties} />
           <PropertiesPanel node={selectedNode} />
         </div>
       </section>
 
       {/* Footer reflects current selection context */}
       <Footer length={getItemCount()} fileName={selectedNode?.type === "file" ? selectedNode.name : undefined} />
+
+      <PropertiesModal node={selectedNode} open={showProperties} onClose={() => setShowProperties(false)} />
     </>
   );
 };

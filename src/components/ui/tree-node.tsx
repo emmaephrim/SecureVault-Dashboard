@@ -6,7 +6,7 @@ import FileIcon from "./file-icon";
 import FolderIcon from "./folder-icon";
 import FileTree from "./file-tree";
 
-export function TreeNode({ node, depth, expanded, setExpanded, selectedId, setSelectedId, focusedId, setFocusedId }: TreeNodeProps) {
+export function TreeNode({ node, depth, expanded, setExpanded, selectedId, setSelectedId, focusedId, setFocusedId, showProperties, setShowProperties }: TreeNodeProps) {
   const isFolder = node.type === "folder";
   const isExpanded = expanded.has(node.id);
   const isSelected = selectedId === node.id;
@@ -47,6 +47,11 @@ export function TreeNode({ node, depth, expanded, setExpanded, selectedId, setSe
           if (isFolder) toggle();
           // Selection is explicit (click or Enter)
           setSelectedId(node.id);
+
+          // Only open modal on small screens
+          if (window.innerWidth < 640) {
+            setShowProperties(true);
+          }
         }}
         className={`
           flex items-center gap-2 px-2 py-1 w-full cursor-pointer rounded-md
@@ -70,7 +75,9 @@ export function TreeNode({ node, depth, expanded, setExpanded, selectedId, setSe
       </button>
 
       {/* Render children only when expanded */}
-      {isFolder && isExpanded && node.children && <FileTree data={node.children} depth={depth + 1} expanded={expanded} setExpanded={setExpanded} selectedId={selectedId} setSelectedId={setSelectedId} focusedId={focusedId} setFocusedId={setFocusedId} />}
+      {isFolder && isExpanded && node.children && (
+        <FileTree data={node.children} depth={depth + 1} expanded={expanded} setExpanded={setExpanded} selectedId={selectedId} setSelectedId={setSelectedId} focusedId={focusedId} setFocusedId={setFocusedId} showProperties={showProperties} setShowProperties={setShowProperties} />
+      )}
     </li>
   );
 }
