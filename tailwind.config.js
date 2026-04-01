@@ -47,6 +47,7 @@ export default {
           "on-background": "#E6E0E9",
           surface: "#141218",
           "on-surface": "#E6E0E9",
+          "surface-container": "#211F26",
           "inverse-surface": "#E6E0E9",
           "inverse-on-surface": "#322F35",
           "inverse-primary": "#6750A4",
@@ -58,6 +59,11 @@ export default {
           "section-background": "#F5F5F5",
           white: "#FFFFFF",
         },
+      },
+
+      // custom breakpoints
+      screens: {
+        "md-a": "685px",
       },
     },
   },

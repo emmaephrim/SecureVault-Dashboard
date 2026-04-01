@@ -52,7 +52,7 @@ export function TreeNode({ node, depth, expanded, setExpanded, selectedId, setSe
           flex items-center gap-2 px-2 py-1 w-full cursor-pointer rounded-md
           border-2 transition-all duration-200 ease-in-out outline-none
 
-          ${isSelected ? "bg-brand-primary-container border-brand-primary text-brand-on-primary-container font-semibold" : isFocused ? "border-brand-primary" : "border-transparent hover:bg-brand-on-secondary hover:text-brand-secondary"}
+          ${isSelected ? "bg-brand-primary-container border-brand-primary text-brand-on-primary-container font-semibold" : isFocused ? "border-brand-primary" : "border-transparent hover:bg-brand-secondary-container hover:text-brand-secondary"}
         `}
         style={{ paddingLeft: `${depth * 16}px` }}
       >
