@@ -25,6 +25,12 @@ This project rebuilds that experience into a performant and intuitive file explo
 
 The interface follows a dark-themed design system aligned with SecureVault’s “cyber-secure, precise, and fast” brand direction.
 
+## Live Demo
+
+The project is deployed and accessible here:
+
+[View Live Application](https://secure-vault-dashboard-beta.vercel.app/)
+
 ### Design System Includes:
 
 - Typography scale
