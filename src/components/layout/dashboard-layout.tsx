@@ -227,7 +227,7 @@ export const DashboardLayout: React.FC = () => {
 
       <section className="mt-[189px] w-full">
         <div className="flex flex-row justify-end">
-          <FileExplorerPanel data={filteredData} expanded={effectiveExpanded} setExpanded={setExpanded} selectedId={selectedId} setSelectedId={setSelectedId} focusedId={focusedId} />
+          <FileExplorerPanel data={filteredData} expanded={effectiveExpanded} setExpanded={setExpanded} selectedId={selectedId} setSelectedId={setSelectedId} focusedId={focusedId} setFocusedId={setFocusedId} />
 
           <PropertiesPanel node={selectedNode} />
         </div>

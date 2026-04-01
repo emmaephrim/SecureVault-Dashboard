@@ -6,7 +6,7 @@ import FileIcon from "./file-icon";
 import FolderIcon from "./folder-icon";
 import FileTree from "./file-tree";
 
-export function TreeNode({ node, depth, expanded, setExpanded, selectedId, setSelectedId, focusedId }: TreeNodeProps) {
+export function TreeNode({ node, depth, expanded, setExpanded, selectedId, setSelectedId, focusedId, setFocusedId }: TreeNodeProps) {
   const isFolder = node.type === "folder";
   const isExpanded = expanded.has(node.id);
   const isSelected = selectedId === node.id;
@@ -37,18 +37,15 @@ export function TreeNode({ node, depth, expanded, setExpanded, selectedId, setSe
         ref={ref}
         type="button"
         onClick={() => {
+          setFocusedId(null);
           if (isFolder) toggle();
           setSelectedId(node.id);
         }}
         className={`
-  flex items-center gap-2 px-2 py-1 w-full cursor-pointer rounded-md
-  border-2 transition-all duration-200 ease-in-out text-left
-
-  focus-visible:ring-2 focus-visible:ring-brand-primary
-  focus-visible:border-brand-primary
-
-  ${isSelected ? "bg-brand-primary-container border-brand-primary text-brand-on-primary-container font-semibold" : isFocused ? "bg-brand-primary/20 border-brand-primary" : "border-transparent hover:bg-brand-on-secondary hover:text-brand-secondary"}
-`}
+            flex items-center gap-2 px-2 py-1 w-full cursor-pointer rounded-md
+            border-2 transition-all duration-200 ease-in-out outline-none
+            ${isSelected ? "bg-brand-primary-container border-brand-primary text-brand-on-primary-container font-semibold" : isFocused ? "border-brand-primary" : "border-transparent hover:bg-brand-on-secondary hover:text-brand-secondary"}
+          `}
         style={{ paddingLeft: `${depth * 16}px` }}
       >
         {/* Icons */}
@@ -65,7 +62,7 @@ export function TreeNode({ node, depth, expanded, setExpanded, selectedId, setSe
         </div>
       </button>
 
-      {isFolder && isExpanded && node.children && <FileTree data={node.children} depth={depth + 1} expanded={expanded} setExpanded={setExpanded} selectedId={selectedId} setSelectedId={setSelectedId} focusedId={focusedId} />}
+      {isFolder && isExpanded && node.children && <FileTree data={node.children} depth={depth + 1} expanded={expanded} setExpanded={setExpanded} selectedId={selectedId} setSelectedId={setSelectedId} focusedId={focusedId} setFocusedId={setFocusedId} />}
     </li>
   );
 }
