@@ -47,6 +47,7 @@ export function TreeNode({ node, depth, expanded, setExpanded, selectedId, setSe
           if (isFolder) toggle();
           // Selection is explicit (click or Enter)
           setSelectedId(node.id);
+          setFocusedId(node.id);
 
           // Only open modal on small screens
           if (window.innerWidth < 640) {
