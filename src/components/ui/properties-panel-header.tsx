@@ -7,18 +7,14 @@ const layout: Record<string, string> = {
 
 export default function PropertiesPanelHeader({ name, type }: { name: string; type: string }): React.ReactElement {
   return (
-    <>
-      <div className="px-5 py-3">
-        <div className="flex items-center">
-          {type == "file" ? <FaRegFile className={`${layout.iconContainer}`} /> : <FaRegFolder className={`${layout.iconContainer}`} />}
-          <div>
-            <h1 className="text-brand-on-surface text-body-lg-emph">{name}</h1>
-            <p className="text-brand-outline capitalize text-body-md-emph">{type}</p>
-          </div>
+    <div className="px-5 pb-3">
+      <div className="flex items-center w-[64px] h-[64]">
+        {type == "file" ? <FaRegFile className={`${layout.iconContainer}`} /> : <FaRegFolder className={`${layout.iconContainer}`} />}
+        <div>
+          <h1 className="text-brand-on-surface text-body-lg-emph">{name}</h1>
+          <p className="text-brand-outline capitalize text-body-md-emph">{type}</p>
         </div>
       </div>
-
-      <hr className="border-1 border-brand-primary pb-5" />
-    </>
+    </div>
   );
 }

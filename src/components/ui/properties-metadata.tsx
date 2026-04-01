@@ -1,8 +1,8 @@
 const Item: React.FC<{ name: string | number; value: string | number }> = ({ name, value }) => {
   return (
-    <div className="mb-2 px-2 grid grid-cols-1 sm:grid-cols-[1fr_2fr] gap-2 sm:gap-4 bg-brand-on-secondary p-2 text-brand-secondary text-body-md rounded-sm">
-      <span className="font-medium opacity-80">{name}</span>
-      <span className="font-medium opacity-80">{value}</span>
+    <div className="mb-2 px-2 grid grid-cols-1 sm:grid-cols-[1fr_2fr] gap-2 sm:gap-4 bg-brand-on-secondary p-2 text-brand-on-primary-container text-body-md rounded-md">
+      <span className="font-medium opacity-80 ">{name}</span>
+      <span className="font-medium opacity-80 text-end text-white">{value}</span>
     </div>
   );
 };

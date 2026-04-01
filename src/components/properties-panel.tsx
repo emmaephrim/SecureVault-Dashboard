@@ -10,7 +10,7 @@ export default function PropertiesPanel({ node }: { node?: Node | null }): React
       <div className="p-5">
         <SectionTitle>PROPERTIES</SectionTitle>
       </div>
-      <hr className="border-t-1 border-brand-primary w-full" />
+      <hr className="border-t-1 border-brand-primary w-full mb-3" />
       {!node ? <EmptyState /> : <PropertiesContent node={node} />}
     </section>
   );

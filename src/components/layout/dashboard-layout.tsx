@@ -243,7 +243,7 @@ export const DashboardLayout: React.FC = () => {
       {/* Footer reflects current selection context */}
       <Footer length={getItemCount()} fileName={selectedNode?.type === "file" ? selectedNode.name : undefined} />
 
-      <PropertiesModal node={selectedNode} open={showProperties} onClose={() => setShowProperties(false)} />
+      {selectedNode?.type === "file" && <PropertiesModal node={selectedNode} open={showProperties} onClose={() => setShowProperties(false)} />}
     </>
   );
 };
