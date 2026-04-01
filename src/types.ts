@@ -17,6 +17,7 @@ export type FileTreeProps = {
   selectedId: string | null;
   setSelectedId: SetSelected;
   focusedId: string | null;
+  setFocusedId: SetSelected;
 };
 
 export type TreeNodeProps = {
@@ -27,6 +28,7 @@ export type TreeNodeProps = {
   selectedId: string | null;
   setSelectedId: SetSelected;
   focusedId: string | null;
+  setFocusedId: SetSelected;
 };
 
 export type FileExplorerPanelProps = {
@@ -36,4 +38,5 @@ export type FileExplorerPanelProps = {
   selectedId: string | null;
   setSelectedId: SetSelected;
   focusedId: string | null;
+  setFocusedId: SetSelected;
 };
