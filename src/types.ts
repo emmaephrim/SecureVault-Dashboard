@@ -21,6 +21,8 @@ export type FileTreeProps = {
   setSelectedId: SetSelected;
   focusedId: string | null;
   setFocusedId: SetSelected;
+  showProperties: boolean;
+  setShowProperties: (value: boolean) => void;
 };
 
 export type TreeNodeProps = {
@@ -32,6 +34,8 @@ export type TreeNodeProps = {
   setSelectedId: SetSelected;
   focusedId: string | null;
   setFocusedId: SetSelected;
+  showProperties: boolean;
+  setShowProperties: (value: boolean) => void;
 };
 
 export type FileExplorerPanelProps = {
@@ -42,4 +46,12 @@ export type FileExplorerPanelProps = {
   setSelectedId: SetSelected;
   focusedId: string | null;
   setFocusedId: SetSelected;
+  showProperties: boolean;
+  setShowProperties: (value: boolean) => void;
+};
+
+export type PropertiesModalProps = {
+  node?: Node | null;
+  open: boolean;
+  onClose: () => void;
 };
