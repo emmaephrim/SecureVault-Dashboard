@@ -2,7 +2,7 @@ const Item: React.FC<{ name: string | number; value: string | number }> = ({ nam
   return (
     <div className="mb-2 px-2 grid grid-cols-[1fr_2fr] gap-4 bg-brand-on-secondary p-2 text-brand-secondary text-body-md rounded-sm">
       <span className="font-medium opacity-80">{name}</span>
-      <span className="text-right break-words overflow-hidden">{value}</span>
+      <span className="text-right break-words overflow-hidden text-white">{value}</span>
     </div>
   );
 };

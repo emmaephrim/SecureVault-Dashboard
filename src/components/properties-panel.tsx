@@ -6,7 +6,8 @@ import { SectionTitle } from "./ui/section-title";
 
 export default function PropertiesPanel({ node }: { node?: Node | null }): React.ReactElement {
   return (
-    <section className="min-w-[30rem] border-brand-primary border-l-[1px] min-h-[calc(100vh-233px)] overflow-x-auto">
+    // 233
+    <section className="hidden sm:block min-w-[20rem] lg:min-w-[30rem] border-brand-primary border-l-[1px] min-h-[calc(100vh-189px)] overflow-x-auto">
       <div className="p-5">
         <SectionTitle>PROPERTIES</SectionTitle>
       </div>

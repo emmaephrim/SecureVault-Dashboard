@@ -6,7 +6,7 @@ import { GoDotFill } from "react-icons/go";
 export default function Footer({ length, fileName }: { length: number; fileName?: string }): React.ReactElement {
   return (
     <>
-      <div className="px-6 py-2 flex flex-row justify-between items-center border-2 border-t-brand-primary border-b-0 border-x-0 fixed w-full bottom-0 bg-brand-surface">
+      <div className="hidden px-6 py-2 lg:flex flex-row justify-between items-center border-2 border-t-brand-primary border-b-0 border-x-0 fixed w-full bottom-0 bg-brand-surface">
         <div className="text-brand-on-surface text-body-md flex flex-row items-center shrink-0 gap-2">
           <span>
             {/*Simple plural handling for item count */}

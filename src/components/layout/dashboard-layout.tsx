@@ -213,7 +213,7 @@ export const DashboardLayout: React.FC = () => {
 
   return (
     <>
-      <section className="fixed w-full top-0 bg-brand-surface">
+      <section className="fixed w-full top-0">
         <div className="px-2 md:px-6 py-3">
           <MainHeader />
           {/* Search input */}
