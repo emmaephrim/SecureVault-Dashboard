@@ -9,6 +9,7 @@ export default function Breadcrumb({ path, onNavigate, setQuery }: { path: Node[
       <div className="overflow-x-auto flex flex-row mt-4 items-center w-full whitespace-nowrap transition-all duration-200">
         <button
           onClick={() => {
+            // Reset to root and clear any active search
             onNavigate(null);
             setQuery("");
           }}
@@ -20,9 +21,9 @@ export default function Breadcrumb({ path, onNavigate, setQuery }: { path: Node[
         {path.map((node: Node, index: number) => (
           <div key={index} className="flex items-center transition-all duration-200">
             <RightChevron />
-
+            {/* Only folders are navigable in breadcrumb */}
             {node.type !== "file" && <BreadcrumbItem node={node} onNavigate={onNavigate} />}
-
+            {/* Files are shown as the final, non-clickable item */}
             {node.type == "file" && <span className="shrink-0 text-brand-primary text-title-md px-2">{node.name}</span>}
           </div>
         ))}

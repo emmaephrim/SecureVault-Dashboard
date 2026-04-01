@@ -1,3 +1,4 @@
+// Basic tree structure used across the file explorer
 export type Node = {
   id: string;
   name: string;
@@ -6,7 +7,9 @@ export type Node = {
   children?: Node[];
 };
 
+// Setter for expanded folders (Set of node ids)
 export type SetExpanded = (value: Set<string> | ((prev: Set<string>) => Set<string>)) => void;
+// Setter for selection/focus state (node id or null)
 export type SetSelected = (value: string | null | ((prev: string | null) => string | null)) => void;
 
 export type FileTreeProps = {

@@ -11,7 +11,6 @@ export default function PropertiesPanel({ node }: { node?: Node | null }): React
         <SectionTitle>PROPERTIES</SectionTitle>
       </div>
       <hr className="border-t-1 border-brand-primary w-full" />
-      {/* Section for file and folder Properties */}
       {!node ? (
         <EmptyState />
       ) : (
