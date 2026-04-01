@@ -9,11 +9,17 @@ import data from "../../../data.json";
 import type { Node } from "../../types";
 
 export const DashboardLayout: React.FC = () => {
+  // Tracks which folders are open
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  // Currently selected node (confirmed via click or Enter)
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  // Search input
   const [query, setQuery] = useState("");
+  // Keyboard navigation focus (separate from selection)
   const [focusedId, setFocusedId] = useState<string | null>(null);
 
+  // Build a quick lookup map (id -> node)
+  // Avoids repeatedly traversing the tree when we need a node
   function buildNodeMap(data: Node[]) {
     const map = new Map<string, Node>();
     function traverse(nodes: Node[]) {
@@ -27,8 +33,11 @@ export const DashboardLayout: React.FC = () => {
   }
 
   const nodeMap = useMemo(() => buildNodeMap(data as Node[]), []);
+  // Get the currently selected node object
   const selectedNode = selectedId ? nodeMap.get(selectedId) : null;
 
+  // Map each node to its parent id
+  // Used for breadcrumb plus sibling calculations
   function buildParentMap(data: Node[]) {
     const parentMap = new Map<string, string | null>();
     function traverse(nodes: Node[], parent: string | null) {
@@ -41,16 +50,18 @@ export const DashboardLayout: React.FC = () => {
     return parentMap;
   }
 
+  // Build breadcrumb path from selected node up to root
   function getPath(selectedId: string | null, parentMap: Map<string, string | null>, nodeMap: Map<string, Node>) {
     if (!selectedId) return [];
 
     const path = [];
     let current: string | null = selectedId;
 
+    // Walk up the tree until we hit root
     while (current) {
       const node = nodeMap.get(current);
       if (!node) break;
-      path.unshift(node);
+      path.unshift(node); // prepend so order is root -> current
       current = parentMap.get(current) ?? null;
     }
 
@@ -60,23 +71,22 @@ export const DashboardLayout: React.FC = () => {
   const parentMap = useMemo(() => buildParentMap(data as Node[]), []);
   const breadcrumbPath = getPath(selectedId, parentMap, nodeMap);
 
+  // Used in footer: how many items are in current context
   function getItemCount() {
     if (!selectedNode) return data.length;
-
     // If folder, count its children
     if (selectedNode.type === "folder") {
       return selectedNode.children?.length || 0;
     }
-
-    // If file, count siblings (parent folder)
+    // If file, count siblings (items in same folder)
     const parentId = parentMap.get(selectedNode.id);
     if (!parentId) return data.length;
 
     const parent = nodeMap.get(parentId);
     return parent?.children?.length || 0;
   }
-
-  // Recursively filter tree plus mark folders to expand
+  // Filters tree recursively while keeping structure intact
+  // Also collects which folders should be auto-expanded
   function filterTree(nodes: Node[], query: string, expandedSet: Set<string>): Node[] {
     if (!query) return nodes;
 
@@ -84,48 +94,48 @@ export const DashboardLayout: React.FC = () => {
 
     return nodes
       .map((node): Node | null => {
-        // If node matches, include it
+        // Ifi direct match, include node
         if (node.name.toLowerCase().includes(lowerQuery)) {
           if (node.type === "folder") {
-            expandedSet.add(node.id); // auto-expand match
+            expandedSet.add(node.id); // open matching folders
           }
           return node;
         }
 
-        // If children match, include parent
+        // Otherwise, check children
         if (node.children) {
           const filteredChildren = filterTree(node.children, query, expandedSet);
-
+          // If any child matches, keep parent
           if (filteredChildren.length > 0) {
-            expandedSet.add(node.id); // expand parent
+            expandedSet.add(node.id);
             return { ...node, children: filteredChildren };
           }
         }
 
         return null;
       })
-      .filter((node): node is Node => node !== null); // proper type guard
+      .filter((node): node is Node => node !== null);
   }
 
-  // Compute filtered tree plus expanded nodes
+  // Run filter plus collect auto-expanded folders
   const { filteredData, autoExpanded } = useMemo(() => {
     const newExpanded = new Set<string>();
-
     const result = filterTree(data as Node[], query, newExpanded);
 
     return {
       filteredData: result,
       autoExpanded: newExpanded,
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
-  // Final expansion
+  // Merge manual expansion with auto-expansion from search
   const effectiveExpanded = useMemo(() => {
     return new Set([...expanded, ...autoExpanded]);
   }, [expanded, autoExpanded]);
 
-  // Keyboard Shortcuts feature
-  // Flatten visible nodes based on expansion state
+  // Flatten visible nodes for keyboard navigation
+  // Only includes nodes that are currently visible (respecting expansion)
   function flattenVisible(nodes: Node[], expanded: Set<string>): Node[] {
     const result: Node[] = [];
 
@@ -147,32 +157,27 @@ export const DashboardLayout: React.FC = () => {
     return flattenVisible(filteredData, expanded);
   }, [filteredData, expanded]);
 
-  // Keyboard navigation
+  // Basic keyboard navigation (similar to file explorers)
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
       if (!visibleNodes.length) return;
-
       const currentIndex = visibleNodes.findIndex((n) => n.id === focusedId);
 
-      //Arrow Down move focus
+      // Move focus down
       if (e.key === "ArrowDown") {
         e.preventDefault();
-
         const next = currentIndex === -1 ? visibleNodes[0] : visibleNodes[currentIndex + 1];
-
         if (next) setFocusedId(next.id);
       }
 
-      // Arrow Up move focus
+      // Move focus up
       if (e.key === "ArrowUp") {
         e.preventDefault();
-
         const prev = currentIndex === -1 ? visibleNodes[0] : visibleNodes[currentIndex - 1];
-
         if (prev) setFocusedId(prev.id);
       }
 
-      // Expand
+      // Expand folder
       if (e.key === "ArrowRight") {
         const current = visibleNodes[currentIndex];
         if (current?.type === "folder") {
@@ -180,7 +185,7 @@ export const DashboardLayout: React.FC = () => {
         }
       }
 
-      // Collapse
+      // Collapse folder
       if (e.key === "ArrowLeft") {
         const current = visibleNodes[currentIndex];
         if (current?.type === "folder") {
@@ -192,12 +197,10 @@ export const DashboardLayout: React.FC = () => {
         }
       }
 
-      // Enter confirm selection
+      // Confirm selection
       if (e.key === "Enter") {
         e.preventDefault();
-
         const current = focusedId ? visibleNodes.find((n) => n.id === focusedId) : visibleNodes[0];
-
         if (current) {
           setSelectedId(current.id);
         }
@@ -212,11 +215,10 @@ export const DashboardLayout: React.FC = () => {
     <>
       <section className="fixed w-full top-0 bg-brand-surface">
         <div className="px-2 md:px-6 py-3">
-          {/* Header with logo */}
           <MainHeader />
-          {/* Search Bar */}
+          {/* Search input */}
           <Searchbar query={query} setQuery={setQuery} />
-          {/* Breadcrumb for directory navigation */}
+          {/* Breadcrumb navigation based on selected node */}
           <Breadcrumb path={breadcrumbPath} onNavigate={setSelectedId} setQuery={setQuery} />
         </div>
 
@@ -228,12 +230,11 @@ export const DashboardLayout: React.FC = () => {
       <section className="mt-[189px] w-full">
         <div className="flex flex-row justify-end">
           <FileExplorerPanel data={filteredData} expanded={effectiveExpanded} setExpanded={setExpanded} selectedId={selectedId} setSelectedId={setSelectedId} focusedId={focusedId} setFocusedId={setFocusedId} />
-
           <PropertiesPanel node={selectedNode} />
         </div>
       </section>
 
-      {/* footer */}
+      {/* Footer reflects current selection context */}
       <Footer length={getItemCount()} fileName={selectedNode?.type === "file" ? selectedNode.name : undefined} />
     </>
   );
