@@ -13,9 +13,15 @@ export default function PropertiesMetadata({ name, type, id, size, items }: { na
       <p className="text-brand-on-surface-variant text-label-md-emph uppercase mb-4">Metadata</p>
 
       <Item name={"Name"} value={name} />
-      <Item name={"Type"} value={type} />
+      <div className="grid grid-cols-2 gap-x-2 sm:hidden">
+        <Item name={"Type"} value={type} />
+        {size && <Item name={"Size"} value={size} />}
+      </div>
+      <div className="hidden sm:block">
+        <Item name={"Type"} value={type} />
+        {size && <Item name={"Size"} value={size} />}
+      </div>
       <Item name={"ID"} value={id} />
-      {size && <Item name={"Size"} value={size} />}
       {items && <Item name={items > 1 ? "Items" : "Item"} value={items as number} />}
     </div>
   );
