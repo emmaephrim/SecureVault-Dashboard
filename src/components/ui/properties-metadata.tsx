@@ -7,12 +7,12 @@ const Item: React.FC<{ name: string | number; value: string | number }> = ({ nam
   );
 };
 
-export default function PropertiesMetadata({ name, type, id, size, items }: { name: string; type: string; id: string; size?: number | string; items?: number }) {
+export default function PropertiesMetadata({ name, type, id, size, items = 0 }: { name: string; type: string; id: string; size?: number | string; items?: number }) {
   return (
     <div className="px-5">
       <p className="text-brand-on-surface-variant text-label-md-emph uppercase mb-4">Metadata</p>
-
       <Item name={"Name"} value={name} />
+
       <div className="grid grid-cols-2 gap-x-2 sm:hidden">
         <Item name={"Type"} value={type} />
         {size && <Item name={"Size"} value={size} />}
@@ -21,8 +21,10 @@ export default function PropertiesMetadata({ name, type, id, size, items }: { na
         <Item name={"Type"} value={type} />
         {size && <Item name={"Size"} value={size} />}
       </div>
+
       <Item name={"ID"} value={id} />
-      {items && <Item name={items > 1 ? "Items" : "Item"} value={items as number} />}
+
+      {type === "folder" && <Item name={items > 1 ? "Items" : "Item"} value={items as number} />}
     </div>
   );
 }
