@@ -3,7 +3,7 @@ import BreadcrumbItem from "./ui/breadcrumb-item";
 import RightChevron from "./ui/right-chevron";
 import type { Node, SetSelected } from "../types";
 
-export default function Breadcrumb({ path, onNavigate, setQuery }: { path: Node[]; onNavigate: SetSelected; setQuery: (e: string) => void }): React.ReactElement {
+export default function Breadcrumb({ path, onNavigate, setQuery, setFocusedId }: { path: Node[]; onNavigate: SetSelected; setQuery: (e: string) => void; setFocusedId: (e: string | null) => void }): React.ReactElement {
   return (
     <>
       <div className="overflow-x-auto flex flex-row mt-4 items-center w-full whitespace-nowrap transition-all duration-200">
@@ -22,7 +22,7 @@ export default function Breadcrumb({ path, onNavigate, setQuery }: { path: Node[
           <div key={index} className="flex items-center transition-all duration-200">
             <RightChevron />
             {/* Only folders are navigable in breadcrumb */}
-            {node.type !== "file" && <BreadcrumbItem node={node} onNavigate={onNavigate} />}
+            {node.type !== "file" && <BreadcrumbItem node={node} onNavigate={onNavigate} setFocusedId={setFocusedId} />}
             {/* Files are shown as the final, non-clickable item */}
             {node.type == "file" && <span className="shrink-0 text-brand-primary text-title-md px-2 transition-all duration-200 opacity-100">{node.name}</span>}
           </div>
