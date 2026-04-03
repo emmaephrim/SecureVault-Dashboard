@@ -55,3 +55,13 @@ export type PropertiesModalProps = {
   open: boolean;
   onClose: () => void;
 };
+
+export type HandleKeyParams = {
+  e: KeyboardEvent;
+  visibleNodes: Node[];
+  focusedId: string | null;
+  setFocusedId: (id: string) => void;
+  setExpanded: SetExpanded;
+  setSelectedId: (id: string) => void;
+  setShowProperties: (value: boolean) => void;
+};
