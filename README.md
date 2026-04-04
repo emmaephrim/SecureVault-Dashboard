@@ -126,54 +126,114 @@ It reduces navigation friction and makes the system feel more predictable.
 
 ---
 
-## Technical Approach
+# Technical Approach
 
-### Recursive Strategy
+## Recursive Strategy (How the tree data is managed)
 
-The data is structured as a nested tree (folders containing files or other folders), so the UI follows the same pattern.
+This project uses the provided `data.json` as a **recursive tree** (a nested folder/file structure). Each item is a `Node`, where folders can contain an array of more `Node`s:
 
-Each node is rendered using a `TreeNode` component. If the node is a folder and it’s expanded, it renders its children using the same component. That’s what makes it recursive.
+- `type: "folder"` → may include `children: Node[]`
+- `type: "file"` → leaf node (no children)
+- every node has a unique `id` for state + lookups
 
-```
-if (node.type === "folder" && expanded.has(node.id)) {
-  // render children
-}
-```
+### Why a recursive approach?
 
-This means the same logic works no matter how deep the structure goes — no need to handle levels differently.
+`data.json` is naturally hierarchical (folders contain folders/files), and the depth is unknown. Recursion is the cleanest way to:
 
----
+- traverse the entire structure,
+- render nested UI (folder → children),
+- filter/search while keeping parent/child relationships intact.
 
-### Managing the Tree Efficiently
+### 1) Preprocessing the tree (recursive traversal)
 
-To avoid repeatedly traversing the tree, I created a few helper structures:
+To avoid repeatedly walking the tree during UI interactions, the app builds two maps up-front:
 
-- **Node map (id → node)**
+**A) `nodeMap` (id → node)**
+Built by recursively visiting every node once:
 
-  Used to quickly get a node when needed (e.g. for the properties panel)
+- purpose: instantly access any node by `id` (selection, properties panel, etc.)
+- benefit: avoids expensive “search the tree for this node” operations
 
-- **Parent map (id → parentId)**
+Implementation idea:
 
-  Used to rebuild the breadcrumb path and understand relationships between nodes
+- walk each node
+- `map.set(node.id, node)`
+- if the node has `children`, recurse into them
 
----
+**B) `parentMap` (nodeId → parentId | null)**
+Also built recursively:
 
-### Data Handling
+- purpose: quick upward navigation (breadcrumbs + sibling)
+- benefit: enables breadcrumb construction without re-traversing the whole tree
 
-Two key maps are built for efficient lookups:
+Each traversal step records:
 
-- **Node Map (id → node)** : Used to retrieve node details in constant time.
-- **Parent Map (id → parentId)** : Used for breadcrumb path reconstruction.
+- `parentMap.set(node.id, parentId)`
+- then recurses into `children` using the current node as the parent
 
----
+### 2) Breadcrumbs (upward traversal using the parent map)
 
-### Keyboard Navigation Strategy
+When a node is selected, the breadcrumb path is derived by walking _up_ the tree:
 
-- Visible nodes are flattened into a list.
-- Navigation operates on this flattened structure.
-- Focus (`focusedId`) is separate from selection (`selectedId`).
+1. start from `selectedId`
+2. get the current node from `nodeMap`
+3. prepend it to the path (`unshift`) so ordering becomes `Root → … → Selected`
+4. move upward using `parentMap.get(currentId)`
+5. stop when the parent is `null` (root)
 
-This mirrors how real file explorers behave.
+This creates breadcrumbs efficiently because it only visits the ancestors of the selected node, not the whole dataset.
+
+### 3) Filtering/searching while preserving structure (recursive filter)
+
+Search is implemented as a recursive filter that **keeps the tree shape**:
+
+- If a node name matches the query, include it.
+- If it doesn’t match:
+  - recursively filter its children
+  - if any children match, keep the parent folder **but replace its `children` with only the matching subtree**
+  - if nothing matches, return `null` for that branch
+
+This is important because a file explorer needs context: if a deeply nested file matches, users must still see the parent folders leading to it.
+
+### 4) Auto-expanding folders during search
+
+Filtering also collects folder ids into an `expandedSet`:
+
+- if a folder name matches, it is added so the folder opens
+- if a child matches, the parent folders are added so the match is visible
+
+Then the UI merges:
+
+- user-driven expansion (`expanded` state)
+- search-driven expansion (`autoExpanded` from filtering)
+
+So search results “reveal themselves” without losing the user’s manual open/close state.
+
+### 5) Recursive rendering (FileTree → TreeNode → FileTree)
+
+The UI mirrors the data shape:
+
+- `FileTree` renders a list of nodes.
+- Each `TreeNode` renders its own button row.
+- If the node is a folder and is expanded, it renders another `FileTree` for `node.children` with `depth + 1`.
+
+This pattern scales to any depth and keeps indentation consistent via the `depth` value.
+
+### 6) Flattening visible nodes for keyboard navigation (controlled recursion)
+
+Arrow key navigation needs a linear list, so the app builds `visibleNodes` by recursively traversing only the _expanded_ parts of the tree:
+
+- always push the current node into `result`
+- only recurse into `children` if:
+  - node is a folder, and
+  - its id is in the expanded set
+
+That produces the “what you can currently see on screen” order, enabling predictable:
+
+- `ArrowUp` / `ArrowDown` focus movement
+- `ArrowRight` expand
+- `ArrowLeft` collapse
+- `Enter` to select/open properties (mobile modal)
 
 ---
 
