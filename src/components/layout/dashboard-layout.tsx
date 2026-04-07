@@ -81,7 +81,7 @@ export const DashboardLayout: React.FC = () => {
         <div className="px-2 md:px-6 py-3 bg-brand-background">
           <MainHeader />
           {/* Search input */}
-          <Searchbar query={query} setQuery={setQuery} />
+          <Searchbar query={query} setQuery={setQuery} setFocusedId={setFocusedId} />
           {/* Breadcrumb navigation based on selected node */}
           <Breadcrumb path={breadcrumbPath} onNavigate={setSelectedId} setQuery={setQuery} setFocusedId={setFocusedId} />
         </div>

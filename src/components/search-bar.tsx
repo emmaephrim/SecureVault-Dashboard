@@ -1,12 +1,15 @@
 import { FaSearch } from "react-icons/fa";
 
-export default function Searchbar({ query, setQuery }: { query: string; setQuery: (e: string) => void }): React.ReactElement {
+export default function Searchbar({ query, setQuery, setFocusedId }: { query: string; setQuery: (e: string) => void; setFocusedId: (id: string | null) => void }): React.ReactElement {
   return (
     <>
       <div className="relative flex items-center mt-4">
         <input
           value={query}
-          onChange={(e) => setQuery(e.target.value.trimStart())}
+          onChange={(e) => {
+            setQuery(e.target.value.trimStart());
+            setFocusedId(null);
+          }}
           type="search"
           placeholder="Search files and folders"
           className=" text-body-md text-brand-outline px-4 pl-10 border-brand-inverse-primary border-2 rounded-[10px] bg-transparent w-full h-[45px] focus:border-brand-primary focus:outline-none focus:text-brand-on-surface hover:bg-brand-on-secondary focus:bg-transparent"
