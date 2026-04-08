@@ -62,8 +62,8 @@ export const DashboardLayout: React.FC = () => {
   }, [expanded, autoExpanded]);
 
   const visibleNodes = useMemo(() => {
-    return flattenVisible(filteredData, expanded);
-  }, [filteredData, expanded]);
+    return flattenVisible(filteredData, effectiveExpanded);
+  }, [filteredData, effectiveExpanded]);
 
   // Basic keyboard navigation (similar to file explorers)
   useEffect(() => {
