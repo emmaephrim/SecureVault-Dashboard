@@ -71,7 +71,7 @@ export function TreeNode({ node, depth, expanded, setExpanded, selectedId, setSe
         {/* Node label plus size */}
         <div className="flex items-center justify-between w-full">
           <span className="truncate text-brand-on-surface text-body-md">{node.name}</span>
-          <span className="text-brand-outline text-body-sm">{node.size}</span>
+          <span className="text-brand-outline text-body-sm pl-2">{node.size}</span>
         </div>
       </button>
 
