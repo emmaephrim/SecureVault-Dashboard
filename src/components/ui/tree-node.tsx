@@ -65,7 +65,7 @@ export function TreeNode({ node, depth, expanded, setExpanded, selectedId, setSe
         {/* Expand/collapse + file/folder icons */}
         <div className="flex items-center">
           <div className="w-5 flex-shrink-0 flex items-center justify-center">{isFolder ? isExpanded ? <DownChevron /> : <RightChevron /> : <div className="w-5" />}</div>
-          <div className="flex-shrink-0 flex items-center">{isFolder ? <FolderIcon /> : <FileIcon color="text-brand-outline" />}</div>
+          <div className="flex-shrink-0 flex items-center">{isFolder ? <FolderIcon isExpanded={isExpanded} /> : <FileIcon color="text-brand-outline" />}</div>
         </div>
 
         {/* Node label plus size */}
