@@ -109,14 +109,14 @@ export function handleKey({ e, visibleNodes, focusedId, setFocusedId, setExpande
   // Move focus down
   if (e.key === "ArrowDown") {
     e.preventDefault();
-    const next = currentIndex === -1 ? visibleNodes[0] : visibleNodes[currentIndex + 1];
+    const next = currentIndex === -1 ? visibleNodes[0] : visibleNodes[(currentIndex + 1) % visibleNodes.length];
     if (next) setFocusedId(next.id);
   }
 
   // Move focus up
   if (e.key === "ArrowUp") {
     e.preventDefault();
-    const prev = currentIndex === -1 ? visibleNodes[0] : visibleNodes[currentIndex - 1];
+    const prev = currentIndex === -1 ? visibleNodes.at(-1) : visibleNodes[(currentIndex - 1 + visibleNodes.length) % visibleNodes.length];
     if (prev) setFocusedId(prev.id);
   }
 
