@@ -42,11 +42,10 @@ export function TreeNode({ node, depth, expanded, setExpanded, selectedId, setSe
         ref={ref}
         type="button"
         onClick={() => {
-          // Clicking resets keyboard focus state
-          setFocusedId(null);
           if (isFolder) toggle();
           // Selection is explicit (click or Enter)
           setSelectedId(node.id);
+          // Clicking resets keyboard focus state
           setFocusedId(node.id);
 
           // Only open modal on small screens

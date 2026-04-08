@@ -61,6 +61,7 @@ export const DashboardLayout: React.FC = () => {
     return new Set([...expanded, ...autoExpanded]);
   }, [expanded, autoExpanded]);
 
+  // Visible nodes for keyboard navigation
   const visibleNodes = useMemo(() => {
     return flattenVisible(filteredData, effectiveExpanded);
   }, [filteredData, effectiveExpanded]);
@@ -72,7 +73,7 @@ export const DashboardLayout: React.FC = () => {
     }
 
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey); //clean up to avoid memory leaks
   }, [visibleNodes, focusedId]);
 
   return (
